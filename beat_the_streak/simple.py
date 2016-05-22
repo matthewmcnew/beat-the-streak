@@ -1,3 +1,5 @@
+import numpy as np
+
 from sklearn.base import BaseEstimator, ClassifierMixin
 
 
@@ -12,7 +14,7 @@ class SimpleHittingModel(BaseEstimator, ClassifierMixin):
         return [self._predict_for_x(x[1]) for x in X.iterrows()]
 
     def predict_proba(self, X):
-        return [self._prob_number_attempts(x[1]) for x in X.iterrows()]
+        return np.array([self._prob_number_attempts(x[1]) for x in X.iterrows()])
 
     def _predict_for_x(self, x):
         if self._prob_number_attempts(x) > .5:
@@ -20,4 +22,5 @@ class SimpleHittingModel(BaseEstimator, ClassifierMixin):
         return 0
 
     def _prob_number_attempts(self, x):
-        return 1 - (1 - x['hitting_average'])**self.average_number_of_attempts
+        prob_hit = (1 - x['hitting_average']) ** self.average_number_of_attempts
+        return [prob_hit, 1 - prob_hit]
