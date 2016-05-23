@@ -48,3 +48,14 @@ class BestPickForEachDayGotHitPercentTest(unittest.TestCase):
         score = BestPickForEachDayGotHitPercent(CHOICES.game_date)(StubClassifier(), X[X.is_first_in_group == 1], y)
 
         assert score == .5
+
+    def test_allows_number_of_choices_per_day(self):
+        class StubClassifier(object):
+            def predict_proba(self, x_to_predict):
+                return [[.8, .1], [.2, .8], [.9, .1], [.8, .2]]
+
+        y = pd.Series([1, 1, 1, 0])
+
+        score = BestPickForEachDayGotHitPercent(CHOICES.game_date, number_of_choices_per_day=2)(StubClassifier(), X, y)
+
+        assert score == .75
