@@ -5,7 +5,12 @@ from sklearn.linear_model import LogisticRegression
 
 
 class PlayerModel(BaseEstimator, ClassifierMixin):
-    def __init__(self, model_cls=LogisticRegression):
+
+    @staticmethod
+    def default_factory():
+        return LogisticRegression()
+
+    def __init__(self, model_cls=default_factory):
         self.model_cls = model_cls
 
     def fit(self, X, y):
