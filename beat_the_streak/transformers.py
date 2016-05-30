@@ -1,8 +1,14 @@
-class FeatureSelector(object):
-    def __init__(self, features = []):
+from sklearn.base import BaseEstimator, TransformerMixin
+
+
+class FeatureSelector(BaseEstimator, TransformerMixin):
+    def __init__(self, features=None):
+        if not features:
+            features = []
         self.features = features
 
-    def transform(self, X, y):
+    # noinspection PyUnusedLocal
+    def transform(self, X, y=None):
         return X[self.features]
 
     def fit(self, X, y):

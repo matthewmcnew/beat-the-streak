@@ -2,6 +2,7 @@ import unittest
 
 import pandas as pd
 from beat_the_streak.transformers import FeatureSelector
+from sklearn.base import BaseEstimator, TransformerMixin
 
 TRAIN_SET = pd.DataFrame({'hitting_average': [.5, 4], 'useless_average': [90, 91], 'got_hit': [0, 1]})
 TRAIN_SET_X = TRAIN_SET[['hitting_average', 'useless_average']]
@@ -13,10 +14,12 @@ class FeatureSelectorTest(unittest.TestCase):
         selector = FeatureSelector().fit(TRAIN_SET_X, TRAIN_SET_Y)
 
         assert isinstance(selector, FeatureSelector)
+        assert isinstance(selector, BaseEstimator)
+        assert isinstance(selector, TransformerMixin)
 
     def test_selects_features_in_a_pipeline(self):
         selector = FeatureSelector(['hitting_average'])
-        transform = selector.transform(TRAIN_SET_X, TRAIN_SET_Y)
+        transform = selector.transform(TRAIN_SET_X)
 
         assert transform.equals(TRAIN_SET_X[['hitting_average']])
 
