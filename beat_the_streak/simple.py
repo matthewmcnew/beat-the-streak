@@ -7,7 +7,7 @@ class SimpleHittingModel(BaseEstimator, ClassifierMixin):
         self.average_number_of_attempts = average_number_of_attempts
 
     def fit(self, X, y):
-        pass
+        return self
 
     def predict(self, X):
         return [self._predict_for_x(x[1]) for x in X.iterrows()]
