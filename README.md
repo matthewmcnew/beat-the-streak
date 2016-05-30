@@ -6,3 +6,6 @@ To explore this project:
 pip install requirements.txt
 jupyter notebook
 ```
+
+For a summary of the analysis here check out this [notebook](https://github.com/matthewmcnew/beat-the-streak/blob/master/Project_Summary.ipynb).
+
